@@ -20,14 +20,18 @@ function Player.new(x, y)
 			startingY, self.width, self.height, self.image:getDimensions())
 	end
 
-	-- Set up physics values.
+	-- Set up innate properties.
+	self.yAccel = 1500			-- measured in pixels per second per second
+	self.walkingVelocity = 150  -- measured in pixels per second
+	self.jumpVelocity = -400
+
+	-- Set up values for initial state.
 	self.currentFrame = 1
 	self.facing = 1				-- 1 = right, -1 = left
 	self.x = x
 	self.y = y
-	self.xVelocity = 0			-- measured in pixels per second
+	self.xVelocity = 0
 	self.yVelocity = 0
-	self.yAccel = 1000			-- measured in pixels per second per second
 	self.onGround = false
 	
 	return self
@@ -37,7 +41,7 @@ function Player:update(dt)
 	self.currentFrame = math.floor(self.framesPerSecond * love.timer.getTime() % self.numFrames + 1)
 	self:input()
 	
-	-- apply acceleration and velocity, set coordinates accordingly
+	-- Apply acceleration and velocity; set coordinates accordingly.
 	self.yVelocity = self.yVelocity + (self.yAccel * dt)
 	self.x = self.x + (self.xVelocity * dt)
 	self.y = self.y + (self.yVelocity * dt)
@@ -62,16 +66,16 @@ end
 function Player:input()
 	if love.keyboard.isDown("right") then
 		self.facing = 1
-		self.xVelocity = 100
+		self.xVelocity = self.walkingVelocity
 	elseif love.keyboard.isDown("left") then
 		self.facing = -1
-		self.xVelocity = -100
+		self.xVelocity = -self.walkingVelocity
 	else
 		self.xVelocity = 0
 	end
 	if self.onGround and love.keyboard.isDown("up") then
 		self.onGround = false
-		self.yVelocity = -300
+		self.yVelocity = self.jumpVelocity
 	end
 end
 
