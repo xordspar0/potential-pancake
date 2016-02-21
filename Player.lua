@@ -1,3 +1,5 @@
+local Controller = require("Controller")
+
 local Player = {}
 Player.__index = Player
 
@@ -5,6 +7,8 @@ local debugGround = 400
 
 function Player.new(x, y)
 	local self = setmetatable({}, Player)
+
+	self.controller = Controller.new("keyboard")
 
 	-- Set up the sprite.
 	self.image = love.graphics.newImage("chicken_walk.png")
@@ -64,16 +68,16 @@ function Player:draw()
 end
 
 function Player:input()
-	if love.keyboard.isDown("right") then
+	if self.controller:isDown("right") then
 		self.facing = 1
 		self.xVelocity = self.walkingVelocity
-	elseif love.keyboard.isDown("left") then
+	elseif self.controller:isDown("left") then
 		self.facing = -1
 		self.xVelocity = -self.walkingVelocity
 	else
 		self.xVelocity = 0
 	end
-	if self.onGround and love.keyboard.isDown("up") then
+	if self.onGround and self.controller:isDown("jump") then
 		self.onGround = false
 		self.yVelocity = self.jumpVelocity
 	end
