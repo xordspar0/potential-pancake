@@ -11,7 +11,7 @@ function Player.new(x, y)
 	self.controller = Controller.new("keyboard")
 
 	-- Set up the sprite.
-	self.image = love.graphics.newImage("chicken_walk.png")
+	self.image = love.graphics.newImage("res/images/chicken_walk.png")
 	self.numFrames = 4
 	self.framesPerSecond = 5
 	self.frames = {}
