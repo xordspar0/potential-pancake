@@ -2,7 +2,8 @@ local Controller = {}
 Controller.__index = Controller
 
 function Controller.new(controllerType)
-	local self = setmetatable({}, Controller)
+	local self = {}
+	setmetatable(self, Controller)
 
 	self.type = controllerType
 

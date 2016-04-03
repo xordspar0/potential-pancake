@@ -6,7 +6,8 @@ Player.__index = Player
 local debugGround = 400
 
 function Player.new(x, y)
-	local self = setmetatable({}, Player)
+	local self = {}
+	setmetatable(self, Player)
 
 	self.controller = Controller.new("keyboard")
 
