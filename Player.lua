@@ -1,4 +1,5 @@
 local Controller = require("Controller")
+local Sprite = require("Sprite")
 
 local Player = {}
 Player.__index = Player
@@ -11,24 +12,19 @@ function Player.new(x, y)
 
 	self.controller = Controller.new("keyboard")
 
-	-- Set up the sprite.
-	self.image = love.graphics.newImage("res/images/chicken_walk.png")
-	self.numFrames = 4
-	self.framesPerSecond = 5
-	self.frames = {}
-	self.width = 32
-	self.height = 32
-	local startingX = 0
-	local startingY = 96
-	for i = 1, self.numFrames do
-		self.frames[i] = love.graphics.newQuad(startingX + (i-1)*self.width,
-			startingY, self.width, self.height, self.image:getDimensions())
-	end
+	self.walkAnim = Sprite.new(
+		love.graphics.newImage("res/images/chicken_walk.png"), 4,
+		32, 32, 0, 96,
+		5
+	)
+	self.currentAnim = self.walkAnim
 
 	-- Set up innate properties.
-	self.yAccel = 1500			-- measured in pixels per second per second
+	self.width = 32
+	self.height = 32
 	self.walkingVelocity = 150  -- measured in pixels per second
 	self.jumpVelocity = -400
+	self.yAccel = 1500			-- measured in pixels per second per second
 
 	-- Set up values for initial state.
 	self.currentFrame = 1
@@ -43,7 +39,6 @@ function Player.new(x, y)
 end
 
 function Player:update(dt)
-	self.currentFrame = math.floor(self.framesPerSecond * love.timer.getTime() % self.numFrames + 1)
 	self:input()
 	
 	-- Apply acceleration and velocity; set coordinates accordingly.
@@ -62,10 +57,9 @@ function Player:update(dt)
 end
 
 function Player:draw()
-	love.graphics.draw(
-		self.image, self.frames[self.currentFrame],
-		math.floor(self.x), math.floor(self.y),
-		0, self.facing, 1, self.width/2, self.height)
+	local x = math.floor(self.x)
+	local y = math.floor(self.y)
+	self.currentAnim:draw(x, y, self.facing)
 end
 
 function Player:input()
