@@ -11,6 +11,7 @@ function Controller.new(controllerType)
 		self.right = "right"
 		self.left = "left"
 		self.jump = "up"
+		self.attack = "return"
 	end
 
 	return self
@@ -24,6 +25,8 @@ function Controller:isDown(button)
 			return love.keyboard.isDown(self.left)
 		elseif button == "jump" then
 			return love.keyboard.isDown(self.jump)
+		elseif button == "attack" then
+			return love.keyboard.isDown(self.attack)
 		end
 	end
 end

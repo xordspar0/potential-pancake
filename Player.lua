@@ -17,6 +17,12 @@ function Player.new(x, y)
 		32, 32, 0, 96,
 		5
 	)
+	self.attackAnim = Sprite.new(
+		love.graphics.newImage("res/images/chicken_eat.png"), 4,
+		32, 32, 0, 96,
+		15
+	)
+
 	self.currentAnim = self.walkAnim
 
 	-- Set up innate properties.
@@ -76,6 +82,9 @@ function Player:input()
 	if self.onGround and self.controller:isDown("jump") then
 		self.onGround = false
 		self.yVelocity = self.jumpVelocity
+	end
+	if self.controller:isDown("attack") then
+		self.currentAnim = self.attackAnim
 	end
 end
 
