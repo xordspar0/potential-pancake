@@ -40,6 +40,7 @@ end
 
 function Player:update(dt)
 	self:input()
+	self.currentAnim:update(dt)
 	
 	-- Apply acceleration and velocity; set coordinates accordingly.
 	self.yVelocity = self.yVelocity + (self.yAccel * dt)
