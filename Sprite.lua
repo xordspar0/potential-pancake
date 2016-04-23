@@ -24,6 +24,10 @@ function Sprite.new(image, numFrames, frameWidth, frameHeight, x, y, fps)
 	return self
 end
 
+function Sprite:atLastFrame()
+	return self.currentFram == self.numFrames
+end
+
 function Sprite:update(dt)
 	self.currentFrame = math.floor(self.framesPerSecond * love.timer.getTime() % self.numFrames + 1)
 end

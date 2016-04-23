@@ -1,6 +1,0 @@
-To do:
-
-  * Make characters modular.
-	  * In 'res/char/', make a Lua file for each character, like Chicken.lua.
-	  * Each character file should contain information about its animations,
-		sprites, etc.

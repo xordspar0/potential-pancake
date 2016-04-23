@@ -1,3 +1,4 @@
+local Character = require("Character")
 local Controller = require("Controller")
 local Sprite = require("Sprite")
 
@@ -11,19 +12,7 @@ function Player.new(x, y)
 	setmetatable(self, Player)
 
 	self.controller = Controller.new("keyboard")
-
-	self.walkAnim = Sprite.new(
-		love.graphics.newImage("res/images/chicken_walk.png"), 4,
-		32, 32, 0, 96,
-		5
-	)
-	self.attackAnim = Sprite.new(
-		love.graphics.newImage("res/images/chicken_eat.png"), 4,
-		32, 32, 0, 96,
-		15
-	)
-
-	self.currentAnim = self.walkAnim
+	self.character = Character.new("chicken")
 
 	-- Set up innate properties.
 	self.width = 32
@@ -46,7 +35,7 @@ end
 
 function Player:update(dt)
 	self:input()
-	self.currentAnim:update(dt)
+	self.character:update(dt)
 	
 	-- Apply acceleration and velocity; set coordinates accordingly.
 	self.yVelocity = self.yVelocity + (self.yAccel * dt)
@@ -66,7 +55,8 @@ end
 function Player:draw()
 	local x = math.floor(self.x)
 	local y = math.floor(self.y)
-	self.currentAnim:draw(x, y, self.facing)
+
+	self.character:draw(x, y, self.facing)
 end
 
 function Player:input()
@@ -84,7 +74,7 @@ function Player:input()
 		self.yVelocity = self.jumpVelocity
 	end
 	if self.controller:isDown("attack") then
-		self.currentAnim = self.attackAnim
+		self.character:setAnim("attack")
 	end
 end
 
