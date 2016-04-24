@@ -17,7 +17,7 @@ function Player.new(x, y)
 	-- Set up innate properties.
 	self.width = 32
 	self.height = 32
-	self.walkingVelocity = 150  -- measured in pixels per second
+	self.walkingVelocity = 100  -- measured in pixels per second
 	self.jumpVelocity = -400
 	self.yAccel = 1500			-- measured in pixels per second per second
 
@@ -50,6 +50,10 @@ function Player:update(dt)
 		self.onGround = true
 		self.yVelocity = 0
 	end
+
+	if self.character:getAnim() == "attack" and self.character.animationOver then
+		self.character:setAnim("stand")
+	end
 end
 
 function Player:draw()
@@ -60,19 +64,29 @@ function Player:draw()
 end
 
 function Player:input()
-	if self.controller:isDown("right") then
-		self.facing = 1
-		self.xVelocity = self.walkingVelocity
-	elseif self.controller:isDown("left") then
-		self.facing = -1
-		self.xVelocity = -self.walkingVelocity
+	if self.controller:isDown("right") or self.controller:isDown("left") then
+		if self.controller:isDown("right") then
+			self.facing = 1
+			self.xVelocity = self.walkingVelocity
+		elseif self.controller:isDown("left") then
+			self.facing = -1
+			self.xVelocity = -self.walkingVelocity
+		end
+		if self.character:getAnim() ~= "walk" then
+			self.character:setAnim("walk")
+		end
 	else
 		self.xVelocity = 0
+		if self.onGround and self.character:getAnim() == "walk" then
+			self.character:setAnim("stand")
+		end
 	end
+
 	if self.onGround and self.controller:isDown("jump") then
 		self.onGround = false
 		self.yVelocity = self.jumpVelocity
 	end
+
 	if self.controller:isDown("attack") then
 		self.character:setAnim("attack")
 	end

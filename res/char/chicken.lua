@@ -4,12 +4,22 @@ local Chicken = {}
 Chicken.__index = Chicken
 
 Chicken.animations = {
+	stand = {
+		sprite = Sprite.new(
+			love.graphics.newImage("res/images/chicken_walk.png"), 1,
+			32, 32, 0, 96,
+			5
+		),
+		loop = true
+	},
+
 	walk = {
 		sprite = Sprite.new(
 			love.graphics.newImage("res/images/chicken_walk.png"), 4,
 			32, 32, 0, 96,
 			5
-		)
+		),
+		loop = true
 	},
 
 	attack = {
@@ -18,17 +28,25 @@ Chicken.animations = {
 			32, 32, 0, 96,
 			10
 		),
-		onEnd = function (self)
-			self:setAnim("walk")
-		end
+		loop = false
 	}
 }
 
-Chicken.currentAnim = Chicken.animations.walk
+Chicken.currentAnim = Chicken.animations.stand
+Chicken.currentAnimName = "stand"
+Chicken.animationOver = false
+
+function Chicken:getAnim()
+	return self.currentAnimName
+end
 
 function Chicken:setAnim(animation)
-	self.currentAnim = Chicken.animations[animation]
-	self.currentAnim.sprite:resetFrame()
+	if self.animations[animation] then
+		self.currentAnim = self.animations[animation]
+		self.currentAnimName = animation
+		self.animationOver = false
+		self.currentAnim.sprite:resetFrame()
+	end
 end
 
 function Chicken:update(dt)
@@ -36,8 +54,8 @@ function Chicken:update(dt)
 
 	-- If this is the last frame of the animation, check to see if we should do
 	-- anything.
-	if self.currentAnim.sprite:atLastFrame() and self.currentAnim.onEnd then
-		self.currentAnim.onEnd(self)
+	if self.currentAnim.sprite:atLastFrame() and self.currentAnim.loop == false then
+		self.animationOver = true
 	end
 end
 

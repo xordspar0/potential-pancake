@@ -1,0 +1,3 @@
+* Make characters modular.
+  * Move all of the housekeeping code out of the characters file.
+* Chicken should stick his leg out on the first frame of the walking animation.
