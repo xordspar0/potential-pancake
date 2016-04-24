@@ -19,17 +19,26 @@ function Sprite.new(image, numFrames, frameWidth, frameHeight, x, y, fps)
 			self.image:getDimensions()
 		)
 	end
-	self.currentFrame = 1
+	self:resetFrame()
 
 	return self
 end
 
 function Sprite:atLastFrame()
-	return self.currentFram == self.numFrames
+	return self.currentFrame == self.numFrames
+end
+
+function Sprite:resetFrame()
+	self.startTime = love.timer.getTime()
+	self.currentFrame = math.floor(
+		(self.framesPerSecond * (love.timer.getTime() - self.startTime))
+		% self.numFrames) + 1
 end
 
 function Sprite:update(dt)
-	self.currentFrame = math.floor(self.framesPerSecond * love.timer.getTime() % self.numFrames + 1)
+	self.currentFrame = math.floor(
+		(self.framesPerSecond * (love.timer.getTime() - self.startTime))
+		% self.numFrames) + 1
 end
 
 function Sprite:draw(x, y, facing)
