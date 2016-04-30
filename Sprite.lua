@@ -1,21 +1,20 @@
 local Sprite = {}
 Sprite.__index = Sprite
 
-function Sprite.new(image, numFrames, frameWidth, frameHeight, x, y, fps)
+function Sprite.new(image, frames, frameWidth, frameHeight, fps)
 	local self = {}
 	setmetatable(self, Sprite)
 
 	self.image = image
-	self.numFrames = numFrames
+	self.numFrames = #frames
 	self.frameWidth = frameWidth
 	self.frameHeight = frameHeight
 	self.framesPerSecond = fps
 
 	self.frames = {}
-	for i = 1, self.numFrames do
+	for i, frame in ipairs(frames) do
 		self.frames[i] = love.graphics.newQuad(
-			x + (i-1) * self.frameWidth,
-			y, self.frameWidth, self.frameHeight,
+			frame.x, frame.y, self.frameWidth, self.frameHeight,
 			self.image:getDimensions()
 		)
 	end

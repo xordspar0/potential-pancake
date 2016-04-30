@@ -6,8 +6,11 @@ Chicken.__index = Chicken
 Chicken.animations = {
 	stand = {
 		sprite = Sprite.new(
-			love.graphics.newImage("res/images/chicken_walk.png"), 1,
-			32, 32, 0, 96,
+			love.graphics.newImage("res/images/chicken_walk.png"),
+			{
+				{x = 0, y = 96},
+			},
+			32, 32,
 			5
 		),
 		loop = true
@@ -15,8 +18,14 @@ Chicken.animations = {
 
 	walk = {
 		sprite = Sprite.new(
-			love.graphics.newImage("res/images/chicken_walk.png"), 4,
-			32, 32, 0, 96,
+			love.graphics.newImage("res/images/chicken_walk.png"),
+			{
+				{x = 32, y = 96},
+				{x = 64, y = 96},
+				{x = 96, y = 96},
+				{x = 0, y = 96},
+			},
+			32, 32,
 			5
 		),
 		loop = true
@@ -24,8 +33,14 @@ Chicken.animations = {
 
 	attack = {
 		sprite = Sprite.new(
-			love.graphics.newImage("res/images/chicken_eat.png"), 4,
-			32, 32, 0, 96,
+			love.graphics.newImage("res/images/chicken_eat.png"),
+			{
+				{x = 0, y = 96},
+				{x = 32, y = 96},
+				{x = 64, y = 96},
+				{x = 96, y = 96},
+			},
+			32, 32,
 			10
 		),
 		loop = false
