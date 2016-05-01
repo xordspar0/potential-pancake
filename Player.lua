@@ -87,7 +87,9 @@ function Player:input()
 	if self.onGround and self.controller:isDown("jump") then
 		self.onGround = false
 		self.yVelocity = self.jumpVelocity
-		self.character:setAnim("jump")
+		if self.character:getAnim() ~= "attack" then
+			self.character:setAnim("jump")
+		end
 	end
 	if self.onGround and self.character:getAnim() == "jump" then
 		self.character:setAnim("stand")
