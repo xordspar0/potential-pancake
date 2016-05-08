@@ -11,7 +11,7 @@ function Controller.new(controllerType)
 		self.right = "right"
 		self.left = "left"
 		self.jump = "up"
-		self.attack = "return"
+		self.attack = "rctrl"
 	end
 
 	return self
