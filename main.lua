@@ -6,7 +6,7 @@ local player1
 
 function love.load()
 	player1 = Player.new(100, 100)
-	Level.create("default")
+	Level.load("default")
 end
 
 function love.update(dt)
