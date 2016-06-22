@@ -1,7 +1,7 @@
 return {
   version = "1.1",
   luaversion = "5.1",
-  tiledversion = "0.16.0",
+  tiledversion = "0.16.1",
   orientation = "orthogonal",
   renderorder = "right-down",
   width = 30,
@@ -35,7 +35,7 @@ return {
   layers = {
     {
       type = "tilelayer",
-      name = "Tile Layer 1",
+      name = "bg",
       x = 0,
       y = 0,
       width = 30,

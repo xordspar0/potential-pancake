@@ -1,27 +1,44 @@
+local Resources = require("Resources")
+
 local Level = {}
 Level.__index = Level
 
-function Level.load(levelFolder)
-	-- TODO: Levels can be zip files as well as folders.
-	levelPath = "res/levels/" .. levelFolder .. "/level.lua"
-	print(levelPath)
-	if not love.filesystem.exists(levelPath) then
-		error("Level " .. levelFolder .. " not found.")
-	else
-		local ok, levelFile = pcall(love.filesystem.load, levelPath)
+function Level.new(levelName)
+	self = {}
+	setmetatable(self, Level)
 
-		if not ok then
-			error("There was an error when loading the level file "
-			      .. levelFolder .. ": " .. tostring(levelContents))
-		else
-			local ok, levelContents = pcall(levelFile)
+	-- Load the level from its file so we can pull in its data.
+	local levelFile = Resources.loadLevel(levelName)
 
-			if not ok then
-				error("There was an error when reading the level file "
-				      .. levelFolder .. ": " .. tostring(levelContents))
-			else
-				return levelContents
-			end
+	self.name = levelName
+
+	-- Find the layers (bg; TODO: fg, interactable).
+	for i, layer in ipairs(levelFile.layers) do
+		if layer.type == "tilelayer" and layer.name == "bg" then
+			self.bgLayer = layer.data
+		end
+	end
+
+	-- TODO: Move to a new file called tiles.lua.
+	self.tiles = love.graphics.newImage("res/levels/".. levelName .."/tiles.png")
+	self.tile1 = love.graphics.newQuad(0, 0, 32, 32, self.tiles:getDimensions())
+
+	return self
+end
+
+function Level:draw()
+	local x = 0
+	local y = 0
+	for i, tile in ipairs(self.bgLayer) do
+
+		if tile > 0 then
+			love.graphics.draw(self.tiles, self.tile1, x*32, y*32)
+		end
+
+		x = x + 1
+		if x == 30 then
+			x = 0
+			y = y + 1
 		end
 	end
 end
