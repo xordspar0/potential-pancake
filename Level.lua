@@ -1,10 +1,11 @@
 local Resources = require("Resources")
+local Tileset = require("Tileset")
 
 local Level = {}
 Level.__index = Level
 
 function Level.new(levelName)
-	self = {}
+	local self = {}
 	setmetatable(self, Level)
 
 	-- Load the level from its file so we can pull in its data.
@@ -19,9 +20,7 @@ function Level.new(levelName)
 		end
 	end
 
-	-- TODO: Move to a new file called tiles.lua.
-	self.tiles = love.graphics.newImage("res/levels/".. levelName .."/tiles.png")
-	self.tile1 = love.graphics.newQuad(0, 0, 32, 32, self.tiles:getDimensions())
+	self.tiles = Tileset.new("res/levels/" .. levelName .. "/tiles.png")
 
 	return self
 end
@@ -29,10 +28,12 @@ end
 function Level:draw()
 	local x = 0
 	local y = 0
-	for i, tile in ipairs(self.bgLayer) do
+	for i, tileNumber in ipairs(self.bgLayer) do
 
-		if tile > 0 then
-			love.graphics.draw(self.tiles, self.tile1, x*32, y*32)
+		if tileNumber > 0 then
+			love.graphics.draw(
+				self.tiles.spritesheet, self.tiles.tile[tileNumber],
+				x*32, y*32)
 		end
 
 		x = x + 1

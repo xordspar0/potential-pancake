@@ -5,8 +5,8 @@ local Level = require("Level")
 local player1
 
 function love.load()
-	player1 = Player.new(100, 100)
 	level1 = Level.new("default")
+	player1 = Player.new(100, 100)
 end
 
 function love.update(dt)
