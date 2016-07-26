@@ -20,7 +20,7 @@ function Level.new(levelName)
 		end
 	end
 
-	self.tiles = Tileset.new("res/levels/" .. levelName .. "/tiles.png")
+	self.tiles = Tileset.new(levelName)
 
 	return self
 end

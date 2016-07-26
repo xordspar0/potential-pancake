@@ -1,3 +1,5 @@
+local Resources = require("Resources")
+
 local Tileset = {}
 Tileset.__index = Tileset
 
@@ -8,7 +10,7 @@ function Tileset.new(fileName)
 	local self = {}
 	setmetatable(self, Tileset)
 
-	self.spritesheet = love.graphics.newImage(fileName)
+	self.spritesheet = Resources.loadTileset(fileName)
 
 	-- Divide the spritesheet up into individual tiles.
 	self.tile = {}
