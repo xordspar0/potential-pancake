@@ -1,5 +1,4 @@
 local Player = require("Player")
-local Character = require("Character")
 local Level = require("Level")
 
 local player1

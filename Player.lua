@@ -1,4 +1,4 @@
-local Character = require("Character")
+local Resources = require("Resources")
 local Controller = require("Controller")
 local Sprite = require("Sprite")
 
@@ -12,7 +12,7 @@ function Player.new(x, y)
 	setmetatable(self, Player)
 
 	self.controller = Controller.new("keyboard")
-	self.character = Character.new("chicken")
+	self.character = Resources.loadCharacter("chicken")
 
 	-- Set up innate properties.
 	self.width = 32
@@ -29,23 +29,23 @@ function Player.new(x, y)
 	self.xVelocity = 0
 	self.yVelocity = 0
 	self.onGround = false
-	
+
 	return self
 end
 
 function Player:update(dt)
 	self:input()
 	self.character:update(dt)
-	
+
 	-- Apply acceleration and velocity; set coordinates accordingly.
 	self.yVelocity = self.yVelocity + (self.yAccel * dt)
 	self.x = self.x + (self.xVelocity * dt)
 	self.y = self.y + (self.yVelocity * dt)
-	
+
 	if self.y >= debugGround - 1 then
 		self.y = debugGround - 1
 	end
-	
+
 	if not self.onGround and self.y >= debugGround - 1 then
 		self.onGround = true
 		self.yVelocity = 0
