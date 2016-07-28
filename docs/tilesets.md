@@ -1,6 +1,6 @@
 # Tilesets
 
-There are three tilesets:
+When choosing a tileset to display, the game looks in three places:
 
  1. The default tileset of the game. This is used for a level if no other
 	tilesets are provided.
