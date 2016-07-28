@@ -1,20 +1,27 @@
 local Player = require("Player")
 local Level = require("Level")
 
-local player1
+state = {}
 
 function love.load()
-	level1 = Level.new("default")
-	player1 = Player.new(100, 100)
+	state.level = Level.new("default")
+
+	state.players = {}
+	state.players[1] = Player.new(100, 100)
 end
 
 function love.update(dt)
-	player1:update(dt)
+	for i, player in ipairs(state.players) do
+		player:update(dt)
+	end
 end
 
 function love.draw()
-	level1:draw()
-	player1:draw()
+	state.level:draw()
+
+	for i, player in ipairs(state.players) do
+		player:draw()
+	end
 end
 
 function love.keypressed(key)
