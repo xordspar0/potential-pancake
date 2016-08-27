@@ -5,8 +5,6 @@ local Sprite = require("Sprite")
 local Player = {}
 Player.__index = Player
 
-local debugGround = 400
-
 function Player.new(x, y)
 	local self = {}
 	setmetatable(self, Player)
@@ -19,7 +17,7 @@ function Player.new(x, y)
 	self.height = 32
 	self.walkingVelocity = 100  -- measured in pixels per second
 	self.jumpVelocity = -400
-	self.yAccel = 1500			-- measured in pixels per second per second
+	self.fallAccel = 1500			-- measured in pixels per second per second
 
 	-- Set up values for initial state.
 	self.currentFrame = 1
@@ -28,7 +26,7 @@ function Player.new(x, y)
 	self.y = y
 	self.xVelocity = 0
 	self.yVelocity = 0
-	self.onGround = false
+	self.yAccel = 0
 
 	return self
 end
@@ -42,18 +40,36 @@ function Player:update(dt)
 	self.x = self.x + (self.xVelocity * dt)
 	self.y = self.y + (self.yVelocity * dt)
 
-	if self.y >= debugGround - 1 then
-		self.y = debugGround - 1
-	end
-
-	if not self.onGround and self.y >= debugGround - 1 then
-		self.onGround = true
+	if self:isOnGround() then
 		self.yVelocity = 0
+		self.yAccel = 0
+	else
+		self.yAccel = self.fallAccel
 	end
 
 	if self.character:getAnim() == "attack" and self.character.animationOver then
 		self.character:setAnim("stand")
 	end
+end
+
+function Player:isOnGround()
+	local isOnGround
+	local groundLayer = state.level.gnd
+	local tileSize = state.level.tileSize
+	local playerCol = math.floor(self.x / tileSize)
+	local playerRow = math.floor(self.y / tileSize)
+
+	-- If the player is outside the level, then fall.
+	if not groundLayer[playerRow] or not groundLayer[playerRow][playerCol] then
+		isOnGround = false
+	-- Check for ground under the player's feet.
+	elseif groundLayer[playerRow][playerCol] == 1 then
+		isOnGround = true
+	else
+		isOnGround = false
+	end
+
+	return isOnGround
 end
 
 function Player:draw()
@@ -84,8 +100,7 @@ function Player:input()
 		end
 	end
 
-	if self.onGround and self.controller:isDown("jump") then
-		self.onGround = false
+	if self:isOnGround() and self.controller:isDown("jump") then
 		self.yVelocity = self.jumpVelocity
 		if self.character:getAnim() ~= "attack" then
 			self.character:setAnim("jump")

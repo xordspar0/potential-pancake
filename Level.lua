@@ -1,8 +1,11 @@
 local Resources = require("Resources")
 local Tileset = require("Tileset")
+local Util = require("util")
 
 local Level = {}
 Level.__index = Level
+
+Level.tileSize = 32
 
 function Level.new(levelName)
 	local self = {}
@@ -13,10 +16,11 @@ function Level.new(levelName)
 
 	self.name = levelName
 
-	-- Find the layers (bg; TODO: fg, interactable).
 	for i, layer in ipairs(levelFile.layers) do
 		if layer.type == "tilelayer" and layer.name == "bg" then
-			self.bgLayer = layer.data
+			self.bg = Util.foldTable(layer.data, layer.width)
+		elseif layer.type == "tilelayer" and layer.name == "gnd" then
+			self.gnd = Util.foldTable(layer.data, layer.width)
 		end
 	end
 
@@ -26,20 +30,13 @@ function Level.new(levelName)
 end
 
 function Level:draw()
-	local x = 0
-	local y = 0
-	for i, tileNumber in ipairs(self.bgLayer) do
-
-		if tileNumber > 0 then
-			love.graphics.draw(
+	for rowIndex, row in ipairs(self.bg) do
+		for colIndex, tileNumber in ipairs(row) do
+			if tileNumber > 0 then
+				love.graphics.draw(
 				self.tiles.spritesheet, self.tiles.tile[tileNumber],
-				x*32, y*32)
-		end
-
-		x = x + 1
-		if x == 30 then
-			x = 0
-			y = y + 1
+				colIndex * self.tileSize, rowIndex * self.tileSize)
+			end
 		end
 	end
 end

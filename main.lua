@@ -7,7 +7,7 @@ function love.load()
 	state.level = Level.new("default")
 
 	state.players = {}
-	state.players[1] = Player.new(100, 100)
+	state.players[1] = Player.new(200, -100)
 end
 
 function love.update(dt)
