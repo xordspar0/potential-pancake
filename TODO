@@ -1,4 +1,4 @@
 [X] Display the map on the screen
 [X] Load and display all of the tiles correctly
-[ ] Add a layer to the map for the ground and make the character interact with it
+[X] Add a layer to the map for the ground and make the character interact with it
 [ ] Add a camera object that can move around the level
