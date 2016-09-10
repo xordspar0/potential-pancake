@@ -17,7 +17,7 @@ function Player.new(x, y)
 	self.height = 32
 	self.walkingVelocity = 100  -- measured in pixels per second
 	self.jumpVelocity = -400
-	self.fallAccel = 1500			-- measured in pixels per second per second
+	self.fallAccel = 1500		-- measured in pixels per second per second
 
 	-- Set up values for initial state.
 	self.currentFrame = 1
@@ -88,14 +88,14 @@ function Player:input()
 			self.facing = -1
 			self.xVelocity = -self.walkingVelocity
 		end
-		if self.onGround and
+		if self:isOnGround() and
 		   self.character:getAnim() ~= "walk" and
 		   self.character:getAnim() ~= "attack" then
 			self.character:setAnim("walk")
 		end
 	else
 		self.xVelocity = 0
-		if self.onGround and self.character:getAnim() == "walk" then
+		if self:isOnGround() and self.character:getAnim() == "walk" then
 			self.character:setAnim("stand")
 		end
 	end
