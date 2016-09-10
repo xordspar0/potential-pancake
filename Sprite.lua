@@ -1,7 +1,7 @@
 local Sprite = {}
 Sprite.__index = Sprite
 
-function Sprite.new(image, frames, frameWidth, frameHeight, fps)
+function Sprite.new(image, frames, frameWidth, frameHeight, feetHeight, fps)
 	local self = {}
 	setmetatable(self, Sprite)
 
@@ -9,6 +9,7 @@ function Sprite.new(image, frames, frameWidth, frameHeight, fps)
 	self.numFrames = #frames
 	self.frameWidth = frameWidth
 	self.frameHeight = frameHeight
+	self.feetHeight = feetHeight
 	self.framesPerSecond = fps
 
 	self.frames = {}
@@ -44,7 +45,7 @@ function Sprite:draw(x, y, facing)
 	love.graphics.draw(
 		self.image, self.frames[self.currentFrame],
 		x, y,
-		0, facing, 1, self.frameWidth/2, self.frameHeight)
+		0, facing, 1, self.frameWidth/2, self.frameHeight - self.feetHeight)
 end
 
 return Sprite

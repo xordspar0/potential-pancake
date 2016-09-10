@@ -43,6 +43,7 @@ function Player:update(dt)
 	if self:isOnGround() then
 		self.yVelocity = 0
 		self.yAccel = 0
+		self.y = math.floor(self.y / state.level.tileSize) * state.level.tileSize
 	else
 		self.yAccel = self.fallAccel
 	end

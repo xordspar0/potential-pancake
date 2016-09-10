@@ -7,11 +7,11 @@ Chicken.animations = {
 	stand = {
 		sprite = Sprite.new(
 			love.graphics.newImage("res/images/chicken_walk.png"),
-			{
+			{						-- List of all of frames in the animation.
 				{x = 0, y = 96},
 			},
-			32, 32,
-			5
+			32, 32, 4,				-- The width and height of each frame, how high the feet are in that frame.
+			5						-- The frames per second of this animation.
 		),
 		loop = true
 	},
@@ -25,7 +25,7 @@ Chicken.animations = {
 				{x = 96, y = 96},
 				{x = 0, y = 96},
 			},
-			32, 32,
+			32, 32, 4,
 			5
 		),
 		loop = true
@@ -40,7 +40,7 @@ Chicken.animations = {
 				{x = 64, y = 96},
 				{x = 96, y = 96},
 			},
-			32, 32,
+			32, 32, 4,
 			10
 		),
 		loop = false

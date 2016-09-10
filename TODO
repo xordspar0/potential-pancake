@@ -3,6 +3,7 @@
 [X] Add a layer to the map for the ground and make the character interact with
 	it
 [X] Get walking animation working again
-[ ] Why does the character sometimes hover above the ground and sometimes fall
+[X] Why does the character sometimes hover above the ground and sometimes fall
 	through it?
+[ ] Prevent character from walking into the side of a block
 [ ] Add a camera object that can move around the level
