@@ -39,6 +39,9 @@ function Player:update(dt)
 		self.yVelocity = 0
 		self.yAccel = 0
 		self.y = math.floor(self.y / state.level.tileSize) * state.level.tileSize
+		if self.character:getAnim() == "jump" then
+			self.character:setAnim("stand")
+		end
 	else
 		self.yAccel = self.fallAccel
 	end
