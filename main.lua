@@ -4,7 +4,8 @@ local Level = require("Level")
 state = {}
 
 function love.load()
-	state.level = Level.new("default")
+	state.level = Level.new("fluffy")
+	state.level.music:play()
 
 	state.players = {}
 	state.players[1] = Player.new(200, 10)

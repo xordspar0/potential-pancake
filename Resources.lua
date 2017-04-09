@@ -40,12 +40,21 @@ function Resources.loadLevel(levelName)
 end
 
 -- TODO: Look up tilesets in multiple locations according to /docs/tilesets.md
-function Resources.loadTileset(tilesetName)
-	local tilesetPath = levelDir .. tilesetName .. "/tiles.png"
+function Resources.loadTileset(levelName)
+	local tilesetPath = levelDir .. levelName .. "/tiles.png"
 	if not love.filesystem.exists(tilesetPath) then
-		error("Tileset " .. tilesetName .. " not found.")
+		error("Tileset " .. levelName .. " not found.")
 	else
 		return love.graphics.newImage(tilesetPath)
+	end
+end
+
+function Resources.loadMusic(levelName)
+	local musicPath = levelDir .. levelName .. "/music.ogg"
+	if not love.filesystem.exists(musicPath) then
+		error("Tileset " .. levelName .. " not found.")
+	else
+		return love.audio.newSource(musicPath)
 	end
 end
 

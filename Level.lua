@@ -28,6 +28,9 @@ function Level.new(levelName)
 
 	self.tiles = Tileset.new(levelName)
 
+	self.music = Resources.loadMusic(levelName)
+	self.music:setLooping(true)
+
 	return self
 end
 
