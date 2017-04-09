@@ -35,12 +35,7 @@ function Player:update(dt)
 	self:input()
 	self.character:update(dt)
 
-	-- Apply acceleration and velocity; set coordinates accordingly.
-	self.yVelocity = self.yVelocity + (self.yAccel * dt)
-	self.x = self.x + (self.xVelocity * dt)
-	self.y = self.y + (self.yVelocity * dt)
-
-	if self:isOnGround() then
+	if self:isOnGround() and self.yVelocity > 0 then
 		self.yVelocity = 0
 		self.yAccel = 0
 		self.y = math.floor(self.y / state.level.tileSize) * state.level.tileSize
@@ -48,29 +43,18 @@ function Player:update(dt)
 		self.yAccel = self.fallAccel
 	end
 
+	if self:isAgainstWall(self.facing) then
+		self.xVelocity = 0
+	end
+
 	if self.character:getAnim() == "attack" and self.character.animationOver then
 		self.character:setAnim("stand")
 	end
-end
 
-function Player:isOnGround()
-	local isOnGround
-	local groundLayer = state.level.gnd
-	local tileSize = state.level.tileSize
-	local playerCol = math.floor(self.x / tileSize)
-	local playerRow = math.floor(self.y / tileSize)
-
-	-- If the player is outside the level, then fall.
-	if not groundLayer[playerRow] or not groundLayer[playerRow][playerCol] then
-		isOnGround = false
-	-- Check for ground under the player's feet.
-	elseif groundLayer[playerRow][playerCol] == 1 then
-		isOnGround = true
-	else
-		isOnGround = false
-	end
-
-	return isOnGround
+	-- Apply acceleration and velocity; set coordinates accordingly.
+	self.yVelocity = self.yVelocity + (self.yAccel * dt)
+	self.x = self.x + (self.xVelocity * dt)
+	self.y = self.y + (self.yVelocity * dt)
 end
 
 function Player:draw()
@@ -114,6 +98,59 @@ function Player:input()
 	if self.controller:isDown("attack") and self.character:getAnim() ~= "attack" then
 		self.character:setAnim("attack")
 	end
+end
+
+function Player:isOnGround()
+	local isOnGround
+	local groundLayer = state.level.gnd
+	local tileSize = state.level.tileSize
+	local playerColCenter = math.floor(self.x / tileSize)
+	local playerColLeft = math.floor((self.x - self.width/4) / tileSize)
+	local playerColRight = math.floor((self.x + self.width/4) / tileSize)
+	local playerRow = math.floor(self.y / tileSize)
+
+	-- If the player is outside the level, then fall.
+	if not groundLayer[playerRow] or not groundLayer[playerRow][playerColCenter] then
+		isOnGround = false
+	-- Check for ground under the player's feet.
+	elseif groundLayer[playerRow][playerColLeft] == 1 or
+		groundLayer[playerRow][playerColRight] == 1 then
+		isOnGround = true
+	else
+		isOnGround = false
+	end
+
+	return isOnGround
+end
+
+function Player:isAgainstWall(direction)
+	local isAgainstWall
+	local groundLayer = state.level.gnd
+	local tileSize = state.level.tileSize
+	local playerColLeft = math.floor((self.x - self.width/4) / tileSize)
+	local playerColRight = math.floor((self.x + self.width/4) / tileSize)
+	local playerRow = math.floor((self.y - self.height/2) / tileSize)
+	local playerCol
+
+	if direction == 1 then
+		playerCol = playerColRight
+	elseif direction == -1 then
+		playerCol = playerColLeft
+	else
+		return nil
+	end
+
+	-- If the player is outside the level, then there is no collision.
+	if not groundLayer[playerRow] or not groundLayer[playerRow][playerCol] then
+		isAgainstWall = false
+	-- Check for ground on the side of the player.
+elseif groundLayer[playerRow][playerCol] == 1 then
+		isAgainstWall = true
+	else
+		isAgainstWall = false
+	end
+
+	return isAgainstWall
 end
 
 return Player
