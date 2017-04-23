@@ -17,12 +17,14 @@ function Level.new(levelName)
 	self.name = levelName
 
 	for i, layer in ipairs(levelFile.layers) do
-		if layer.type == "tilelayer" and layer.name == "obj" then
-			self.obj = Util.foldTable(layer.data, layer.width)
+		if layer.type == "tilelayer" and layer.name == "gnd" then
+			self.gnd = Util.foldTable(layer.data, layer.width)
 		elseif layer.type == "tilelayer" and layer.name == "bg" then
 			self.bg = Util.foldTable(layer.data, layer.width)
-		elseif layer.type == "tilelayer" and layer.name == "gnd" then
-			self.gnd = Util.foldTable(layer.data, layer.width)
+		elseif layer.type == "tilelayer" and layer.name == "obj" then
+			self.obj = Util.foldTable(layer.data, layer.width)
+		elseif layer.type == "tilelayer" and layer.name == "fg" then
+			self.fg = Util.foldTable(layer.data, layer.width)
 		end
 	end
 
@@ -55,6 +57,17 @@ function Level:draw()
 			end
 		end
 	end
+	-- Draw the foreground.
+	for rowIndex, row in ipairs(self.fg) do
+		for colIndex, tileNumber in ipairs(row) do
+			if tileNumber > 0 then
+				love.graphics.draw(
+				self.tiles.spritesheet, self.tiles.tile[tileNumber],
+				colIndex * self.tileSize, rowIndex * self.tileSize)
+			end
+		end
+	end
+
 end
 
 return Level
