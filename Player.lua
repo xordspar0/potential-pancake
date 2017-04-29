@@ -50,6 +50,11 @@ function Player:update(dt)
 		self.xVelocity = 0
 	end
 
+	if self:isOnCeiling() and self.yVelocity < 0 then
+		self.yVelocity = 0
+		self.yAccel = 0
+	end
+
 	if self.character:getAnim() == "attack" and self.character.animationOver then
 		self.character:setAnim("stand")
 	end
@@ -111,6 +116,7 @@ function Player:isOnGround()
 	local playerColLeft = math.floor((self.x - self.width/4) / tileSize)
 	local playerColRight = math.floor((self.x + self.width/4) / tileSize)
 	local playerRow = math.floor(self.y / tileSize)
+	print(string.format("FeetHeight: %s", playerRow))
 
 	-- If the player is outside the level, then fall.
 	if not groundLayer[playerRow] or not groundLayer[playerRow][playerColCenter] then
@@ -147,13 +153,37 @@ function Player:isAgainstWall(direction)
 	if not groundLayer[playerRow] or not groundLayer[playerRow][playerCol] then
 		isAgainstWall = false
 	-- Check for ground on the side of the player.
-elseif groundLayer[playerRow][playerCol] == 1 then
+	elseif groundLayer[playerRow][playerCol] == 1 then
 		isAgainstWall = true
 	else
 		isAgainstWall = false
 	end
 
 	return isAgainstWall
+end
+
+function Player:isOnCeiling()
+	local isOnCeiling
+	local groundLayer = state.level.gnd
+	local tileSize = state.level.tileSize
+	local playerColCenter = math.floor(self.x / tileSize)
+	local playerColLeft = math.floor((self.x - self.width/4) / tileSize)
+	local playerColRight = math.floor((self.x + self.width/4) / tileSize)
+	local playerRow = math.floor((self.y-self.height) / tileSize)
+	print(string.format("Head height: %s", playerRow))
+
+	-- If the player is outside the level, then there is no collision.
+	if not groundLayer[playerRow] or not groundLayer[playerRow][playerColCenter] then
+		isOnCeiling = false
+	-- Check for ceiling above the player's head.
+	elseif groundLayer[playerRow][playerColLeft] == 1 or
+		groundLayer[playerRow][playerColRight] == 1 then
+		isOnCeiling = true
+	else
+		isOnCeiling = false
+	end
+
+	return isOnCeiling
 end
 
 return Player

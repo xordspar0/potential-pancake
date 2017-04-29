@@ -6,7 +6,7 @@
 [X]	Why does the character sometimes hover above the ground and sometimes fall
 	through it?
 [X]	Prevent character from walking into the side of a block
-[ ] Prevent character from going through the ceiling
+[X] Prevent character from going through the ceiling
 [X] Add a foreground layer
 [ ]	Add a camera object that can move around the level
 [ ]	Make characters interact with each other
