@@ -4,11 +4,36 @@ local characterDir = "res/char/"
 local levelDir = "res/levels/"
 
 function Resources.loadCharacter(characterName)
-	for i, file in ipairs(love.filesystem.getDirectoryItems(characterDir)) do
-		if string.sub(file, -4, -1) == ".lua" and string.sub(file, 1, -5) == characterName then
-			print("Found character: " .. characterName)
-			return require(characterDir .. characterName)
+	local characterPath = characterDir .. characterName .. "/char.lua"
+	if not love.filesystem.exists(characterPath) then
+		error("Character " .. characterName .. " not found.")
+	else
+		-- Use pcall to run the character Lua code of level files without
+		-- crashing the game if there are errors.
+		local ok, characterFile = pcall(love.filesystem.load, characterPath)
+
+		if not ok then
+			error("There was an error when loading character "
+				  .. characterName .. ": " .. tostring(characterFile))
+		else
+			local ok, character = pcall(characterFile)
+
+			if not ok then
+				error("There was an error when reading character "
+					  .. characterName .. ": " .. tostring(character))
+			else
+				return character
+			end
 		end
+	end
+end
+
+function Resources.loadSprite(characterName, spriteName)
+	local spritePath = characterDir .. characterName .. "/" .. spriteName
+	if not love.filesystem.exists(spritePath) then
+		error("Image " .. spriteName .. " not found.")
+	else
+		return love.graphics.newImage(spritePath)
 	end
 end
 

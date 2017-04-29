@@ -116,7 +116,6 @@ function Player:isOnGround()
 	local playerColLeft = math.floor((self.x - self.width/4) / tileSize)
 	local playerColRight = math.floor((self.x + self.width/4) / tileSize)
 	local playerRow = math.floor(self.y / tileSize)
-	print(string.format("FeetHeight: %s", playerRow))
 
 	-- If the player is outside the level, then fall.
 	if not groundLayer[playerRow] or not groundLayer[playerRow][playerColCenter] then
@@ -170,7 +169,6 @@ function Player:isOnCeiling()
 	local playerColLeft = math.floor((self.x - self.width/4) / tileSize)
 	local playerColRight = math.floor((self.x + self.width/4) / tileSize)
 	local playerRow = math.floor((self.y-self.height) / tileSize)
-	print(string.format("Head height: %s", playerRow))
 
 	-- If the player is outside the level, then there is no collision.
 	if not groundLayer[playerRow] or not groundLayer[playerRow][playerColCenter] then
