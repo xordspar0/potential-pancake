@@ -28,6 +28,9 @@ function Level.new(levelName)
 		end
 	end
 
+	self.width = #self.gnd[1] * self.tileSize
+	self.height = #self.gnd * self.tileSize
+
 	self.tiles = Tileset.new(levelName)
 
 	self.music = Resources.loadMusic(levelName)
