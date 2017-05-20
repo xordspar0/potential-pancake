@@ -14,10 +14,11 @@ function Camera.new(x, y, width, height, mode, trackLength, speed)
 	self.length = trackLength
 	self.speed = speed
 
-	if mode == "pan" or
-		mode == "vpan" or
-		mode == "follow" or
-		mode == "path" then
+	if mode == "static" or
+	   mode == "pan" or
+	   mode == "vpan" or
+	   mode == "follow" or
+	   mode == "path" then
 			self.mode = mode
 	else
 		error(mode .. " is not a valid camera mode")
