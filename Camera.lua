@@ -30,7 +30,7 @@ end
 function Camera:update(dt)
 	if self.mode == "pan" then
 		if self.x + self.width > self.length or
-		   self.x - self.width < self.length then
+		   self.x < 0 then
 			self.speed = -self.speed
 		end
 		self.x = self.x + self.speed*dt
