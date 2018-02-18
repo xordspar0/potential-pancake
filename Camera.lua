@@ -1,9 +1,9 @@
-local Camera = {}
-Camera.__index = Camera
+local camera = {}
+camera.__index = camera
 
-function Camera.new(x, y, width, height, mode, trackLength, speed)
+function camera.new(x, y, width, height, mode, trackLength, speed)
 	local self = {}
-	setmetatable(self, Camera)
+	setmetatable(self, camera)
 
 	self.originX = x
 	self.originY = y
@@ -27,7 +27,7 @@ function Camera.new(x, y, width, height, mode, trackLength, speed)
 	return self
 end
 
-function Camera:update(dt)
+function camera:update(dt)
 	if self.mode == "pan" then
 		if self.x + self.width > self.length or
 		   self.x < 0 then
@@ -47,7 +47,7 @@ function Camera:update(dt)
 	end
 end
 
-function Camera:draw(object)
+function camera:draw(object)
 	love.graphics.push()
 	love.graphics.translate(-self.x, -self.y)
 	love.graphics.setScissor(self.originX, self.originY, self.width, self.height)
@@ -58,4 +58,4 @@ function Camera:draw(object)
 	love.graphics.pop()
 end
 
-return Camera
+return camera

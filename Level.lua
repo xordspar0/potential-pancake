@@ -1,18 +1,18 @@
-local Resources = require("Resources")
-local Tileset = require("Tileset")
+local resources = require("resources")
+local tileset = require("tileset")
 local Util = require("util")
 
-local Level = {}
-Level.__index = Level
+local level = {}
+level.__index = level
 
-Level.tileSize = 32
+level.tileSize = 32
 
-function Level.new(levelName)
+function level.new(levelName)
 	local self = {}
-	setmetatable(self, Level)
+	setmetatable(self, level)
 
 	-- Load the level from its file so we can pull in its data.
-	local levelFile = Resources.loadLevel(levelName)
+	local levelFile = resources.loadLevel(levelName)
 
 	self.name = levelName
 
@@ -31,15 +31,15 @@ function Level.new(levelName)
 	self.width = #self.gnd[1] * self.tileSize
 	self.height = #self.gnd * self.tileSize
 
-	self.tiles = Tileset.new(levelName)
+	self.tiles = tileset.new(levelName)
 
-	self.music = Resources.loadMusic(levelName)
+	self.music = resources.loadMusic(levelName)
 	self.music:setLooping(true)
 
 	return self
 end
 
-function Level:draw()
+function level:draw()
 	-- Draw the background.
 	for rowIndex, row in ipairs(self.bg) do
 		for colIndex, tileNumber in ipairs(row) do
@@ -73,4 +73,4 @@ function Level:draw()
 
 end
 
-return Level
+return level

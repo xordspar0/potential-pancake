@@ -1,16 +1,16 @@
-local Resources = require("Resources")
-local Controller = require("Controller")
-local Sprite = require("Sprite")
+local resources = require("resources")
+local controller = require("controller")
+local sprite = require("sprite")
 
-local Player = {}
-Player.__index = Player
+local player = {}
+player.__index = player
 
-function Player.new(x, y)
+function player.new(x, y)
 	local self = {}
-	setmetatable(self, Player)
+	setmetatable(self, player)
 
-	self.controller = Controller.new("keyboard")
-	self.character = Resources.loadCharacter("chicken")
+	self.controller = controller.new("keyboard")
+	self.character = resources.loadCharacter("chicken")
 
 	-- Set up innate properties.
 	self.width = 32
@@ -31,7 +31,7 @@ function Player.new(x, y)
 	return self
 end
 
-function Player:update(dt)
+function player:update(dt)
 	self:input()
 	self.character:update(dt)
 
@@ -65,14 +65,14 @@ function Player:update(dt)
 	self.y = self.y + (self.yVelocity * dt)
 end
 
-function Player:draw()
+function player:draw()
 	local x = math.floor(self.x)
 	local y = math.floor(self.y)
 
 	self.character:draw(x, y, self.facing)
 end
 
-function Player:input()
+function player:input()
 	if self.controller:isDown("right") or self.controller:isDown("left") then
 		if self.controller:isDown("right") then
 			self.facing = 1
@@ -108,7 +108,7 @@ function Player:input()
 	end
 end
 
-function Player:isOnGround()
+function player:isOnGround()
 	local isOnGround
 	local groundLayer = state.level.gnd
 	local tileSize = state.level.tileSize
@@ -131,7 +131,7 @@ function Player:isOnGround()
 	return isOnGround
 end
 
-function Player:isAgainstWall(direction)
+function player:isAgainstWall(direction)
 	local isAgainstWall
 	local groundLayer = state.level.gnd
 	local tileSize = state.level.tileSize
@@ -161,7 +161,7 @@ function Player:isAgainstWall(direction)
 	return isAgainstWall
 end
 
-function Player:isOnCeiling()
+function player:isOnCeiling()
 	local isOnCeiling
 	local groundLayer = state.level.gnd
 	local tileSize = state.level.tileSize
@@ -184,4 +184,4 @@ function Player:isOnCeiling()
 	return isOnCeiling
 end
 
-return Player
+return player

@@ -1,16 +1,16 @@
-local Resources = require("Resources")
+local resources = require("resources")
 
-local Tileset = {}
-Tileset.__index = Tileset
+local tileset = {}
+tileset.__index = tileset
 
 local tileHeight = 32
 local tileWidth = 32
 
-function Tileset.new(fileName)
+function tileset.new(fileName)
 	local self = {}
-	setmetatable(self, Tileset)
+	setmetatable(self, tileset)
 
-	self.spritesheet = Resources.loadTileset(fileName)
+	self.spritesheet = resources.loadTileset(fileName)
 
 	-- Divide the spritesheet up into individual tiles.
 	self.tile = {}
@@ -29,4 +29,4 @@ function Tileset.new(fileName)
 	return self
 end
 
-return Tileset
+return tileset

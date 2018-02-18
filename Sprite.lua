@@ -1,9 +1,9 @@
-local Sprite = {}
-Sprite.__index = Sprite
+local sprite = {}
+sprite.__index = sprite
 
-function Sprite.new(image, frames, frameWidth, frameHeight, feetHeight, fps)
+function sprite.new(image, frames, frameWidth, frameHeight, feetHeight, fps)
 	local self = {}
-	setmetatable(self, Sprite)
+	setmetatable(self, sprite)
 
 	self.image = image
 	self.numFrames = #frames
@@ -24,28 +24,28 @@ function Sprite.new(image, frames, frameWidth, frameHeight, feetHeight, fps)
 	return self
 end
 
-function Sprite:atLastFrame()
+function sprite:atLastFrame()
 	return self.currentFrame == self.numFrames
 end
 
-function Sprite:resetFrame()
+function sprite:resetFrame()
 	self.startTime = love.timer.getTime()
 	self.currentFrame = math.floor(
 		(self.framesPerSecond * (love.timer.getTime() - self.startTime))
 		% self.numFrames) + 1
 end
 
-function Sprite:update(dt)
+function sprite:update(dt)
 	self.currentFrame = math.floor(
 		(self.framesPerSecond * (love.timer.getTime() - self.startTime))
 		% self.numFrames) + 1
 end
 
-function Sprite:draw(x, y, facing)
+function sprite:draw(x, y, facing)
 	love.graphics.draw(
 		self.image, self.frames[self.currentFrame],
 		x, y,
 		0, facing, 1, self.frameWidth/2, self.frameHeight - self.feetHeight)
 end
 
-return Sprite
+return sprite

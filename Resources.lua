@@ -1,9 +1,9 @@
-local Resources = {}
+local resources = {}
 
 local characterDir = "res/char/"
 local levelDir = "res/levels/"
 
-function Resources.loadCharacter(characterName)
+function resources.loadCharacter(characterName)
 	local characterPath = characterDir .. characterName .. "/char.lua"
 	if not love.filesystem.exists(characterPath) then
 		error("Character " .. characterName .. " not found.")
@@ -28,7 +28,7 @@ function Resources.loadCharacter(characterName)
 	end
 end
 
-function Resources.loadSprite(characterName, spriteName)
+function resources.loadsprite(characterName, spriteName)
 	local spritePath = characterDir .. characterName .. "/" .. spriteName
 	if not love.filesystem.exists(spritePath) then
 		error("Image " .. spriteName .. " not found.")
@@ -38,7 +38,7 @@ function Resources.loadSprite(characterName, spriteName)
 end
 
 -- TODO: Levels can be zip files as well as folders.
-function Resources.loadLevel(levelName)
+function resources.loadLevel(levelName)
 	local levelPath = levelDir .. levelName .. "/level.lua"
 	if not love.filesystem.exists(levelPath) then
 		error("Level " .. levelName .. " not found.")
@@ -65,7 +65,7 @@ function Resources.loadLevel(levelName)
 end
 
 -- TODO: Look up tilesets in multiple locations according to /docs/tilesets.md
-function Resources.loadTileset(levelName)
+function resources.loadTileset(levelName)
 	local tilesetPath = levelDir .. levelName .. "/tiles.png"
 	if not love.filesystem.exists(tilesetPath) then
 		error("Tileset " .. levelName .. " not found.")
@@ -74,7 +74,7 @@ function Resources.loadTileset(levelName)
 	end
 end
 
-function Resources.loadMusic(levelName)
+function resources.loadMusic(levelName)
 	local musicPath = levelDir .. levelName .. "/music.ogg"
 	if not love.filesystem.exists(musicPath) then
 		error("Tileset " .. levelName .. " not found.")
@@ -83,4 +83,4 @@ function Resources.loadMusic(levelName)
 	end
 end
 
-return Resources
+return resources

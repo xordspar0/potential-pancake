@@ -1,13 +1,13 @@
-local Resources = require("Resources")
-local Sprite = require("Sprite")
+local resources = require("resources")
+local sprite = require("sprite")
 
 local Chicken = {}
 Chicken.__index = Chicken
 
 Chicken.animations = {
 	attack = {
-		sprite = Sprite.new(
-			Resources.loadSprite("chicken", "chicken_eat.png"),
+		sprite = sprite.new(
+			resources.loadsprite("chicken", "chicken_eat.png"),
 			{						-- List of all of frames in the animation.
 				{x = 0, y = 96},
 				{x = 32, y = 96},
@@ -21,8 +21,8 @@ Chicken.animations = {
 	},
 
 	jump = {
-		sprite = Sprite.new(
-			Resources.loadSprite("chicken", "chicken_walk.png"),
+		sprite = sprite.new(
+			resources.loadsprite("chicken", "chicken_walk.png"),
 			{
 				{x = 32, y = 96},
 			},
@@ -33,8 +33,8 @@ Chicken.animations = {
 	},
 
 	stand = {
-		sprite = Sprite.new(
-			Resources.loadSprite("chicken", "chicken_walk.png"),
+		sprite = sprite.new(
+			resources.loadsprite("chicken", "chicken_walk.png"),
 			{
 				{x = 0, y = 96},
 			},
@@ -45,8 +45,8 @@ Chicken.animations = {
 	},
 
 	walk = {
-		sprite = Sprite.new(
-			Resources.loadSprite("chicken", "chicken_walk.png"),
+		sprite = sprite.new(
+			resources.loadsprite("chicken", "chicken_walk.png"),
 			{
 				{x = 32, y = 96},
 				{x = 64, y = 96},

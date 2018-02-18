@@ -1,19 +1,19 @@
-local Camera = require("Camera")
-local Player = require("Player")
-local Level = require("Level")
+local camera = require("camera")
+local player = require("player")
+local level = require("level")
 
 state = {}
 
 function love.load()
-	state.level = Level.new("fluffy")
+	state.level = level.new("fluffy")
 	state.level.music:play()
 	state.cameras = {
-		Camera.new(0, 0, love.graphics.getWidth(), love.graphics.getHeight(),
+		camera.new(0, 0, love.graphics.getWidth(), love.graphics.getHeight(),
 		           "vpan", state.level.height, 10),
 	}
 
 	state.players = {}
-	state.players[1] = Player.new(200, 10)
+	state.players[1] = player.new(200, 10)
 end
 
 function love.update(dt)

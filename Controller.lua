@@ -1,9 +1,9 @@
-local Controller = {}
-Controller.__index = Controller
+local controller = {}
+controller.__index = controller
 
-function Controller.new(controllerType)
+function controller.new(controllerType)
 	local self = {}
-	setmetatable(self, Controller)
+	setmetatable(self, controller)
 
 	self.type = controllerType
 
@@ -17,7 +17,7 @@ function Controller.new(controllerType)
 	return self
 end
 
-function Controller:isDown(button)
+function controller:isDown(button)
 	if self.type == "keyboard" then
 		if button == "right" then
 			return love.keyboard.isDown(self.right)
@@ -31,4 +31,4 @@ function Controller:isDown(button)
 	end
 end
 
-return Controller
+return controller
