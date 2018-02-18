@@ -1,6 +1,6 @@
 local resources = require("resources")
 local tileset = require("tileset")
-local Util = require("util")
+local util = require("util")
 
 local level = {}
 level.__index = level
@@ -18,13 +18,13 @@ function level.new(levelName)
 
 	for i, layer in ipairs(levelFile.layers) do
 		if layer.type == "tilelayer" and layer.name == "gnd" then
-			self.gnd = Util.foldTable(layer.data, layer.width)
+			self.gnd = util.foldTable(layer.data, layer.width)
 		elseif layer.type == "tilelayer" and layer.name == "bg" then
-			self.bg = Util.foldTable(layer.data, layer.width)
+			self.bg = util.foldTable(layer.data, layer.width)
 		elseif layer.type == "tilelayer" and layer.name == "obj" then
-			self.obj = Util.foldTable(layer.data, layer.width)
+			self.obj = util.foldTable(layer.data, layer.width)
 		elseif layer.type == "tilelayer" and layer.name == "fg" then
-			self.fg = Util.foldTable(layer.data, layer.width)
+			self.fg = util.foldTable(layer.data, layer.width)
 		end
 	end
 

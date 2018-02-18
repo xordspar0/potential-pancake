@@ -1,6 +1,6 @@
-local Util = {}
+local util = {}
 
-function Util.foldTable(longTable, width)
+function util.foldTable(longTable, width)
 	foldedTable = {}
 
 	row = 1
@@ -20,8 +20,4 @@ function Util.foldTable(longTable, width)
 	return foldedTable
 end
 
-function math.round(x)
-	return x + 0.5 - (x + 0.5) % 1
-end
-
-return Util
+return util
