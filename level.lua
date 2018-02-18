@@ -1,11 +1,30 @@
 local resources = require("resources")
 local tileset = require("tileset")
-local util = require("util")
 
 local level = {}
 level.__index = level
 
 level.tileSize = 32
+
+local function foldTable(longTable, width)
+	foldedTable = {}
+
+	row = 1
+	col = 1
+	foldedTable[row] = {}
+	for i, value in ipairs(longTable) do
+		foldedTable[row][col] = value
+
+		col = col + 1
+		if col > width then
+			row = row + 1
+			col = 1
+			foldedTable[row] = {}
+		end
+	end
+
+	return foldedTable
+end
 
 function level.new(levelName)
 	local self = {}
@@ -18,13 +37,13 @@ function level.new(levelName)
 
 	for i, layer in ipairs(levelFile.layers) do
 		if layer.type == "tilelayer" and layer.name == "gnd" then
-			self.gnd = util.foldTable(layer.data, layer.width)
+			self.gnd = foldTable(layer.data, layer.width)
 		elseif layer.type == "tilelayer" and layer.name == "bg" then
-			self.bg = util.foldTable(layer.data, layer.width)
+			self.bg = foldTable(layer.data, layer.width)
 		elseif layer.type == "tilelayer" and layer.name == "obj" then
-			self.obj = util.foldTable(layer.data, layer.width)
+			self.obj = foldTable(layer.data, layer.width)
 		elseif layer.type == "tilelayer" and layer.name == "fg" then
-			self.fg = util.foldTable(layer.data, layer.width)
+			self.fg = foldTable(layer.data, layer.width)
 		end
 	end
 
