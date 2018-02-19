@@ -1,9 +1,8 @@
 local camera = {}
-camera.__index = camera
 
 function camera.new(x, y, width, height, mode, trackLength, speed)
 	local self = {}
-	setmetatable(self, camera)
+	setmetatable(self, {__index = camera})
 
 	self.originX = x
 	self.originY = y

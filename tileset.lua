@@ -1,14 +1,13 @@
 local resources = require("resources")
 
 local tileset = {}
-tileset.__index = tileset
 
 local tileHeight = 32
 local tileWidth = 32
 
 function tileset.new(fileName)
 	local self = {}
-	setmetatable(self, tileset)
+	setmetatable(self, {__index = tileset})
 
 	self.spritesheet = resources.loadTileset(fileName)
 

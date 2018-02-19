@@ -2,7 +2,6 @@ local resources = require("resources")
 local tileset = require("tileset")
 
 local level = {}
-level.__index = level
 
 level.tileSize = 32
 
@@ -28,7 +27,7 @@ end
 
 function level.new(levelName)
 	local self = {}
-	setmetatable(self, level)
+	setmetatable(self, {__index = level})
 
 	-- Load the level from its file so we can pull in its data.
 	local levelFile = resources.loadLevel(levelName)

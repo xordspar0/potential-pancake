@@ -1,9 +1,8 @@
 local controller = {}
-controller.__index = controller
 
 function controller.new(controllerType)
 	local self = {}
-	setmetatable(self, controller)
+	setmetatable(self, {__index = controller})
 
 	self.type = controllerType
 

@@ -1,9 +1,8 @@
 local sprite = {}
-sprite.__index = sprite
 
 function sprite.new(image, frames, frameWidth, frameHeight, feetHeight, fps)
 	local self = {}
-	setmetatable(self, sprite)
+	setmetatable(self, {__index = sprite})
 
 	self.image = image
 	self.numFrames = #frames

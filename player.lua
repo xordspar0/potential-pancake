@@ -3,11 +3,10 @@ local controller = require("controller")
 local sprite = require("sprite")
 
 local player = {}
-player.__index = player
 
 function player.new(x, y)
 	local self = {}
-	setmetatable(self, player)
+	setmetatable(self, {__index = player})
 
 	self.controller = controller.new("keyboard")
 	self.character = resources.loadCharacter("chicken")
