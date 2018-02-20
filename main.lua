@@ -5,7 +5,14 @@ local level = require("level")
 state = {}
 
 function love.load()
-	state.level = level.new("fluffy")
+	levelName = "default"
+	for i, flag in ipairs(arg) do
+		if flag == "--level" and arg[i+1] then
+			levelName = arg[i+1]
+		end
+	end
+	state.level = level.new(levelName)
+	
 	state.level.music:play()
 	state.cameras = {
 		camera.new(0, 0, love.graphics.getWidth(), love.graphics.getHeight(),
