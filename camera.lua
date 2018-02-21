@@ -14,13 +14,14 @@ function camera.new(x, y, width, height, mode, trackLength, speed)
 	self.speed = speed
 
 	if mode == "static" or
-	   mode == "pan" or
-	   mode == "vpan" or
-	   mode == "follow" or
-	   mode == "path" then
-			self.mode = mode
+		mode == "pan" or
+		mode == "vpan" then
+		self.mode = mode
+	elseif mode == "follow" or
+		mode == "path" then
+		error(string.format('Camera mode "%s" is not implemented yet', mode))
 	else
-		error(mode .. " is not a valid camera mode")
+		error(string.format('"%s" is not a valid camera mode', mode))
 	end
 
 	return self
@@ -39,10 +40,6 @@ function camera:update(dt)
 			self.speed = -self.speed
 		end
 		self.y = self.y + self.speed*dt
-	elseif self.mode == "follow" then
-		error("camera mode follow is not implemented yet")
-	elseif self.mode == "path" then
-		error("camera mode path is not implemented yet")
 	end
 end
 

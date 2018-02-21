@@ -11,7 +11,11 @@ function love.load()
 			levelName = arg[i+1]
 		end
 	end
-	state.level = level.new(levelName)
+
+	state.level, err = level.new(levelName)
+	if err then
+		error(err)
+	end
 
 	if state.level.music then
 		state.level.music:play()

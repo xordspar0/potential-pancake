@@ -7,7 +7,7 @@ Chicken.__index = Chicken
 Chicken.animations = {
 	attack = {
 		sprite = sprite.new(
-			resources.loadsprite("chicken", "chicken_eat.png"),
+			resources.loadSprite("chicken", "chicken_eat.png"),
 			{						-- List of all of frames in the animation.
 				{x = 0, y = 96},
 				{x = 32, y = 96},
@@ -22,7 +22,7 @@ Chicken.animations = {
 
 	jump = {
 		sprite = sprite.new(
-			resources.loadsprite("chicken", "chicken_walk.png"),
+			resources.loadSprite("chicken", "chicken_walk.png"),
 			{
 				{x = 32, y = 96},
 			},
@@ -34,7 +34,7 @@ Chicken.animations = {
 
 	stand = {
 		sprite = sprite.new(
-			resources.loadsprite("chicken", "chicken_walk.png"),
+			resources.loadSprite("chicken", "chicken_walk.png"),
 			{
 				{x = 0, y = 96},
 			},
@@ -46,7 +46,7 @@ Chicken.animations = {
 
 	walk = {
 		sprite = sprite.new(
-			resources.loadsprite("chicken", "chicken_walk.png"),
+			resources.loadSprite("chicken", "chicken_walk.png"),
 			{
 				{x = 32, y = 96},
 				{x = 64, y = 96},
