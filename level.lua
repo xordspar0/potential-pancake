@@ -34,6 +34,7 @@ function level.new(levelName)
 
 	self.name = levelName
 
+	self.gnd, self.bg, self.obj, self.fg = {}, {}, {}, {}
 	for i, layer in ipairs(levelFile.layers) do
 		if layer.type == "tilelayer" and layer.name == "gnd" then
 			self.gnd = foldTable(layer.data, layer.width)
