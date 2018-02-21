@@ -64,13 +64,13 @@ function resources.loadLevel(levelName)
 	end
 end
 
--- TODO: Look up tilesets in multiple locations according to /docs/tilesets.md
 function resources.loadTileset(levelName)
-	local tilesetPath = levelDir .. levelName .. "/tiles.png"
-	if not love.filesystem.exists(tilesetPath) then
-		error("Tileset " .. levelName .. " not found.")
+	if love.filesystem.exists(levelDir .. levelName .. "/tiles.png") then
+		return love.graphics.newImage(levelDir .. levelName .. "/tiles.png")
+	elseif love.filesystem.exists(levelDir .. "tiles.png") then
+		return love.graphics.newImage(levelDir .. "tiles.png")
 	else
-		return love.graphics.newImage(tilesetPath)
+		error(string.format('Tileset for "%s" not found.', levelName))
 	end
 end
 
