@@ -1,4 +1,4 @@
-# project-x
+# Potential Pancake
 
 This is a secret project that I work on from time to time.
 
