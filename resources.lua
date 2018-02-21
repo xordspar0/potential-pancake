@@ -75,11 +75,11 @@ function resources.loadTileset(levelName)
 end
 
 function resources.loadMusic(levelName)
-	local musicPath = levelDir .. levelName .. "/music.ogg"
-	if not love.filesystem.exists(musicPath) then
-		error("Tileset " .. levelName .. " not found.")
-	else
+	local musicPath = levelDir .. levelName .. '/music.ogg'
+	if love.filesystem.exists(musicPath) then
 		return love.audio.newSource(musicPath)
+	else
+		return nil
 	end
 end
 

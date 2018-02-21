@@ -51,8 +51,13 @@ function level.new(levelName)
 
 	self.tiles = tileset.new(levelName)
 
-	self.music = resources.loadMusic(levelName)
-	self.music:setLooping(true)
+	local music = resources.loadMusic(levelName)
+	if music then
+		self.music = music
+		self.music:setLooping(true)
+	else
+		io.write(string.format('No music to load for level "%s"\n', levelName))
+	end
 
 	return self
 end
